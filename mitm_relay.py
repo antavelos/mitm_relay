@@ -19,6 +19,8 @@ BUFSIZE = 4096
 __prog_name__ = 'mitm_relay'
 __version__ = 0.4
 
+client = None
+
 def main():
 	parser = argparse.ArgumentParser(description='%s version %.2f' % (__prog_name__, __version__))
 	
@@ -164,6 +166,10 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 		self.send_response(200)
 		self.end_headers()
+
+		if self.path == '/billtalksnow':
+			client.send(body)
+
 		self.wfile.write(body)
 		return
 
